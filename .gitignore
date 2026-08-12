@@ -1,0 +1,26 @@
+# MSDS 565 — build artifacts and editor scratch. None of this is course material.
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter autosave checkpoints
+.ipynb_checkpoints/
+
+# LaTeX build output (slides and Final Project guidelines — keep the .tex, not these)
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+
+# Student-facing exports are generated on demand, not committed.
+# The one exception is the ABET instruction PDFs, which live under Course Admin/ABET/.
+
+# Submitted student work never enters this repo. Peer_Eval_Tally.ipynb reads the collected
+# peer evaluation forms out of here; they stay local.
+Course Admin/Tracking/Submissions/

@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Full title of the paper"
+    },
+    "authors": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Full names of all authors in order"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year of publication"
+    },
+    "venue": {
+      "type": "string",
+      "description": "Conference, workshop, or journal where published"
+    },
+    "keywords": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Key topics listed by the authors"
+    },
+    "summary": {
+      "type": "string",
+      "description": "2-3 sentence summary of the paper's main contributions"
+    },
+    "methods": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "AI/ML methods and techniques described in the paper"
+    }
+  },
+  "required": ["title", "authors", "year", "venue", "keywords", "summary", "methods"],
+  "additionalProperties": false
+}
