@@ -1,32 +1,8 @@
 # MSDS 565 — Unit 3: Text Classification (Movie Genre)
 
-**Format:** Group (3–4 students; teams are reshuffled between projects)  
-**Datasets:** IMDB non-commercial datasets (title/genre/rating data) + Wikipedia plot text (scraped by you)  
-**Target variable:** A chosen binary genre from the IMDB dataset (e.g. `Comedy`, `Horror`, `Romance`, `Action`, …)
-
----
-
 ## Overview
 
 This project takes you through the full CRISP-DM pipeline on movie plot text: building a genre-labeled movie table from raw IMDB data, scraping Wikipedia to generate your own text corpus from scratch, NLP vectorization and modeling (including LLM-based knowledge distillation), interpreting and auditing what those models actually learned, and a deployed Streamlit app, across five notebooks. You'll maintain a GitHub repo organized well enough that a stranger could open it, follow the pipeline from start to finish, and try the app on any movie.
-
-Note that **no synopsis text is provided to you**. Unlike Unit 1, where the dataset arrived complete, here you are given labels but no features — the text half of your dataset is something you build yourself in Notebook 2. Everything downstream depends on how well you build it.
-
-### Notebooks
-
-Each notebook is numbered for sort order and covers one topic. Do **NOT** mix work across notebooks.
-
-| Notebook | Topic | Filename |
-|---|---|---|
-| 1 | IMDB Data Prep & EDA | `P3_MovieGenre-1_EDA_<TeamName>.ipynb` |
-| 2 | Wikipedia Scraping & Text EDA | `P3_MovieGenre-2_Scrape_<TeamName>.ipynb` |
-| 3 | Vectorization, Modeling & LLM Distillation | `P3_MovieGenre-3_Modeling_<TeamName>.ipynb` |
-| 4 | Interpretability & Fairness | `P3_MovieGenre-4_xAI_<TeamName>.ipynb` |
-| 5 | Streamlit Deployment | `P3_MovieGenre-5_App_<TeamName>.ipynb` |
-
-Each notebook is submitted as a snapshot at the start of the following class session.
-
-> **Stay inside the notebook you are on.** Each notebook does its own job and hands its output to the next one. "Do not mix work across notebooks" runs **forward as well as backward**: do not redo an earlier notebook's work here, and do not get a head start on the next one. Do not vectorize text in the scraping notebook, and do not compute SHAP in the modeling notebook. Work belonging to notebook N+1 that appears in notebook N earns credit in **neither** — it is missing where it should be, and out of scope where it is.
 
 ### Datasets
 
@@ -37,7 +13,21 @@ Source (reference only): [https://developer.imdb.com/non-commercial-datasets/](h
 
 These provide movie titles, genres, and ratings. The `genres` field is the source of your classification targets; `primaryTitle` is what you will search Wikipedia by; `numVotes` is how you will select which movies to scrape. The full load/filter/merge pipeline is detailed in Notebook 1.
 
-**Plot text** — none is provided. Your text corpus is scraped from Wikipedia in Notebook 2 and saved as `wiki_scraped.csv`.
+**Plot text** — **none is provided.** You are given labels but no features: the text half of your dataset is something you build yourself, scraped from Wikipedia in Notebook 2 and saved as `wiki_scraped.csv`. Everything downstream depends on how well you build it.
+
+### Notebooks
+
+Each notebook is numbered for sort order and covers one topic. They are cumulative and most notebooks produce artifacts that the later ones will need.
+- Follow the filename conventions.
+- Do **NOT** mix work across notebooks, i.e., only scraping should be in the scraping notebook (no vectorizing, no SHAP). This runs **forward as well as backward** — work belonging to notebook N+1 that appears in notebook N earns credit in neither.
+
+| Notebook | Topic | Filename |
+|---|---|---|
+| 1 | IMDB Data Prep & EDA | `P3_MovieGenre-1_EDA_<TeamName>.ipynb` |
+| 2 | Wikipedia Scraping & Text EDA | `P3_MovieGenre-2_Scrape_<TeamName>.ipynb` |
+| 3 | Vectorization, Modeling & LLM Distillation | `P3_MovieGenre-3_Modeling_<TeamName>.ipynb` |
+| 4 | Interpretability & Fairness | `P3_MovieGenre-4_xAI_<TeamName>.ipynb` |
+| 5 | Streamlit Deployment | `P3_MovieGenre-5_App_<TeamName>.ipynb` |
 
 ### GitHub Repo
 
@@ -72,18 +62,9 @@ Your repo **MUST**:
 - Include an **`environment.yml`** exported from the conda environment you actually ran the notebooks in — `conda env export --no-builds > environment.yml`. **If your team installed anything beyond the course environment, this is the only record of it**, and without it nobody else can run your work. Re-export it whenever you add a library
 - Have every notebook fully executed top-to-bottom with **NO** errors **and committed with its outputs intact**, a markdown explanation for every decision, and **NO** dead code, scratch cells, or bloated outputs (don't print full dataframes, full GridSearchCV logs, etc.)
 - Be free of junk: stray or duplicate notebooks, versioned filenames (e.g. `notebook_v2_FINAL.ipynb`), raw IMDB source files, scraped text CSVs, cached embedding matrices, and anything exceeding GitHub's 100 MB limit (use Git LFS or store large files outside the repo)
-- Use the repo, notebook, and model filenames given above exactly. Your team name goes wherever `<TeamName>` appears, and it must be **usable in a filename** — letters, digits, and hyphens only, no spaces or punctuation — and must **not contain any student's name**. Use the same team name everywhere. Naming violations cost points here
-- Keep the repo **deidentified**: selected notebooks are archived for accreditation review, so **no student's name may appear in any notebook, filename, or folder** — your team name is the only identifier that should be there
-
-GitHub repo quality is a graded component, and it is graded **by inspection** — the files you committed, their names, and whether the structure matches this prompt. Your notebooks are read, not re-run, so **what you commit is what is graded**: a notebook committed without its outputs reads as not done, and a traceback left in a cell is a visible error. An `environment.yml` that leaves out a library your notebooks import counts the same as no environment file at all.
+- Use the repo, notebook, and model filenames given above exactly. Your team name goes wherever `<TeamName>` appears, and it must be **usable in a filename** — letters, digits, and hyphens only, no spaces or punctuation — and must **not contain any student's name**. Use the same team name everywhere.
 
 ### Grading
-
-#### How grading works
-
-Grading happens **live, in class**, from the progress report your team gives at the start of each session — not from later inspection of your notebooks. Nothing is re-opened after class.
-
-#### Points
 
 | Category | Component | Points | Scored as |
 |---|---|---:|---|
@@ -97,38 +78,7 @@ Grading happens **live, in class**, from the progress report your team gives at 
 |  | Peer evaluation | 10 | Individual |
 | **Total** | | **100** | |
 
-**10 of the 100 points are scored individually** — peer evaluation. Everything else is a team grade.
-
-#### Deadlines and absence
-
-Each notebook is due as a snapshot at the start of the class session listed on the schedule, and **at least one team member must be present to report on it**. A notebook first presented the following week earns **half credit**; after that it earns **zero**.
-
-#### How each notebook is scored
-
-Each notebook is scored on six dimensions — **Coverage, Justification, Code quality, Interpretation, Progress report**, and a **keystone** specific to that notebook — each rated **1 to 5**. Each dimension carries a share of the notebook's points, so the six add up to that notebook's value. Only levels 5, 3, and 1 are described; **4 and 2 are the steps between** them.
-
-| Dimension | Share | The question | 5 | 4 | 3 | 2 | 1 |
-|---|---:|---|---|---|---|---|---|
-| **Coverage** | 20% | Is every required element present? | all present | — | two or more missing | — | large parts absent |
-| **Justification** | 20% | Explained and defended, or just executed? | every non-obvious decision reasoned | — | describes *what*, not *why* | — | none |
-| **Code quality** | 15% | Runs clean, follows conventions, correct? | no errors, conventions conform, methods right | — | errors on re-run or a method misapplied | — | does not run |
-| **Interpretation** | 15% | Results read for meaning, or only produced? | read, with surprises accounted for | — | little reading | — | none |
-| **Progress report** | 10% | Can the team account for its own work on the spot? | whoever is asked accounts for the work and the reasoning, unprompted | — | one member accounts for it thinly; others cannot pick it up | — | no one asked can account for the work |
-| **Keystone** | 20% | Did you get the point of *this* notebook? | printed with each notebook below | — | printed with each notebook below | — | printed with each notebook below |
-
-Progress report is why every member must be able to explain every notebook. At most progress reports one member is picked **at random** to account for a specific decision; if they cannot, the question goes to a teammate. You **MUST** be able to explain how any part of your team's code works, not just the part you wrote. **Code that no one on the team can explain does not count as submitted work.**
-
-A rating maps straight to points — no conversion table and no curve. Your six ratings become a weighted average on the 1–5 scale, and that average is read as a fraction of five against the notebook's point value:
-
-$$
-\text{notebook score}_i \;=\; P_i \times \frac{1}{5} \sum_{k=1}^{6} w_k\, r_k
-\qquad\qquad
-\text{score} \;=\; \sum_{i=1}^{5} \text{notebook score}_i
-$$
-
-$r_k$ is your rating on dimension $k$, $w_k$ is its share from the table above, and $P_i$ is notebook $i$'s point value from the table at the top of this prompt. Straight 5s earns all of a notebook's points, straight 4s earns 80% of them, and straight 3s earns 60%.
-
-> **One rule worth knowing in advance.** A number that should have raised suspicion and didn't — R² ≈ 1, accuracy ≈ 100%, any metric that is too good — caps Interpretation at **2** no matter what else is present. Every warning of that kind in this prompt is there for a reason.
+Note: **10 of the 100 points are scored individually** — peer evaluation. Everything else is a team grade.
 
 ---
 
@@ -191,15 +141,6 @@ For **EVERY** data quality issue you find (nulls, implausible values, suspect la
 - Focal genre declared with at least 15% positive rate, and the 5-genre suite declared
 - Structured features (`startYear`, `runtimeMinutes`, `averageRating`, `numVotes`) cleaned and carried forward for the Notebook 3 ablation
 
-**Keystone — focal genre and suite declared with a defensible reason; the top-3,000 bias confronted**
-
-| | |
-|---:|---|
-| **3** | Choice argued from positive rate *and* interest; states plainly what the popularity cut costs in representativeness and which films it excludes |
-| **2** | Choice justified; bias acknowledged briefly |
-| **1** | Choice asserted; bias mentioned in passing |
-| **0** | Neither declared nor defended |
-
 ---
 
 ## Notebook 2 — Wikipedia Scraping & Text EDA
@@ -255,15 +196,6 @@ For **EVERY** data quality issue you find, document it in a markdown cell and fl
 - Plot length distribution; minimum-length threshold set and justified; duplicate plot texts found and explained
 - Top-25 corpus vocabulary; focal-genre vocabulary compared against the corpus overall
 - Scrape bias compared against the Notebook 1 population; focal genre re-checked against the 15% bar; final usable dataset size reported
-
-**Keystone — disambiguation strategy and the failure-mode breakdown with real examples**
-
-| | |
-|---:|---|
-| **3** | A concrete fallback chain, defended; failures broken out by mode with examples of each; duplicate texts traced back to wrong-page picks |
-| **2** | Strategy stated; failures counted but not exemplified |
-| **1** | Bare title search; failures lumped into a single number |
-| **0** | No failure handling — or the loop crashes |
 
 ---
 
@@ -391,15 +323,6 @@ Rank **every** model trained in this notebook — every Part A representation ×
 - Every model ranked by macro-F1 on the shared test set; the teacher's training-set F1 included and clearly marked as not held-out
 - All estimators **and their fitted vectorizers** exported under the naming convention
 
-**Keystone — the ablation and the leaderboard actually argued**
-
-| | |
-|---:|---|
-| **3** | Says which representation and which classifier win **and why**; quantifies the distillation gap and states when pseudo-labeling would be the right choice; the three-way ablation is read, not just tabulated |
-| **2** | Leaderboard complete; discussion partial |
-| **1** | Numbers only, no argument |
-| **0** | Pieces missing, or near-100% metrics left unexamined |
-
 ---
 
 ## Notebook 4 — Interpretability & Fairness
@@ -442,15 +365,6 @@ Your submission **MUST** include:
 - Per-subgroup classification metrics computed and the disparity visualized
 - Diagnosis stated: data problem, modeling problem, or inherent to the feature-target relationship
 - SHAP values and subgroup metrics exported for the Notebook 5 fairness panel
-
-**Keystone — SHAP on structured features, and the disparity diagnosed**
-
-| | |
-|---:|---|
-| **3** | Explains what non-semantic signal the model leans on and whether relying on it is legitimate; commits to a diagnosis of the disparity and supports it |
-| **2** | Both produced; the diagnosis is hedged |
-| **1** | Plots produced without reading |
-| **0** | Missing |
 
 ---
 
@@ -496,12 +410,4 @@ Your submission **MUST** include:
 - Screenshot of the running app embedded; launch instructions including API keys or Ollama pulls
 - Cross-family discussion, plus at least one movie released after the IMDB snapshot or outside the top-3,000 scrape set
 
-**Keystone — the cross-family disagreement actually analyzed**
-
-| | |
-|---:|---|
-| **3** | Says where the student diverges from the supervised model and whether the teacher behaves consistently with its Notebook 3 assessment; runs the genuinely unseen movie and reads what happens |
-| **2** | Panels compared descriptively |
-| **1** | Panels shown, no comparison |
-| **0** | Does not run |
 

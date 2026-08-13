@@ -52,15 +52,15 @@ MSDS 565/
 │   └── Project/P1_Prompt.md
 ├── Unit 2 - Image Data/
 │   ├── Demos/                             # 10 notebooks — image processing and CNNs
-│   ├── Extra/                             # image scraping, outside the taught sequence
+│   ├── Extra/                             # a Wikipedia image-scraping utility
 │   └── Project/                           # P2_Prompt.md + the DDGS image scraper
 └── Unit 3 - Text Data/
     ├── Demos/                             # 14 notebooks — NLP, LLMs, scraping, Streamlit
-    ├── Extra/                             # BERTopic and other side material
+    ├── Extra/                             # 17 optional notebooks continuing each section
     └── Project/P3_Prompt.md
 ```
 
-`Extra/` folders are side material — genuinely useful, but not part of the sequence we cover in class and not assumed by any project.
+`Extra/` folders are side material — genuinely useful, but not part of the sequence we cover in class and not assumed by any project. Their filenames continue each section's numbering, so `U3-1_NLP-6_WordEmbeddings.ipynb` picks up where the taught `U3-1_NLP-5_arXiv.ipynb` leaves off. Several of them need a local Ollama install or a large model download, which is part of why they sit outside the main sequence.
 
 ---
 
@@ -100,11 +100,11 @@ Four sections: NLP fundamentals, LLMs, web scraping, and Streamlit web apps.
 | Prefix | Topic |
 |---|---|
 | `U3-1_NLP-*` | Tokenization, vectorization, text classification with SHAP, corpus work, arXiv |
-| `U3-2_LLM-*` | Claude API — basics, JSON schema output, LangChain RAG |
-| `U3-3_Scrape-*` | BeautifulSoup, the Wikipedia API, Wolfram Alpha, `read_html` tables, sentiment |
+| `U3-2_LLM-*` | Provider SDKs side by side — basics, JSON schema output, LangChain RAG |
+| `U3-3_Scrape-*` | BeautifulSoup, the Wikipedia API, scraping one article and a table of linked pages, news sentiment |
 | `U3-4_Streamlit_*.py` | Two runnable Streamlit apps — the reference patterns for the P2 and P3 apps |
 
-The LLM notebooks call the **Claude API** and need your own API key in the environment; the local-model notebooks use **Ollama**. `paper_schema.json` is the JSON Schema used for structured LLM output. Run a Streamlit app with `streamlit run "Unit 3 - Text Data/Demos/U3-4_Streamlit_Plotter.py"`.
+The LLM notebooks call **OpenAI, Anthropic, and Google Gemini** side by side and read each key from an environment variable, so you need your own key for whichever provider you run; the local-model notebooks use **Ollama** and cost nothing. `paper_schema.json` is the JSON Schema used for structured LLM output. Run a Streamlit app with `streamlit run "Unit 3 - Text Data/Demos/U3-4_Streamlit_Plotter.py"`.
 
 **Libraries:** NLTK, TextBlob, transformers, BERTopic, LangChain, anthropic, BeautifulSoup, streamlit
 
@@ -126,11 +126,17 @@ P2 ships the tools you build your dataset with, in `Unit 2 - Image Data/Project/
 
 ---
 
-## What is on Blackboard, not here
+## What is not in this repository
+
+On **Blackboard**:
 
 - The project rubric, and the syllabus
 - Lecture slide decks
 - The peer evaluation form and the meeting minutes template
 - The Unit 2 cat/dog image set
 
-If something a notebook or prompt refers to isn't in this repository, check Blackboard before asking — and if it isn't there either, ask.
+On the **class Google Drive**, in the `Datasets` folder:
+
+- The P1 car-sales dataset and the P3 IMDB files — pull data from there rather than downloading it from the original source, so everyone starts from the same copy
+
+If something a notebook or prompt refers to isn't in this repository, check Blackboard and the class Google Drive before asking — and if it isn't in either, ask.

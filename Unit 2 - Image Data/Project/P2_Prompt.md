@@ -1,20 +1,28 @@
 # MSDS 565 — Unit 2: Image Classification (Custom Scraped Dataset)
 
-**Format:** Group (3–4 students; teams are reshuffled between projects)  
-**Dataset:** Your own — built from scratch with the provided DDGS image scraper  
-**Target variable:** Your own class labels (3–10 categories of your choosing)
-
----
-
 ## Overview
 
 This project takes you through the full CRISP-DM pipeline on images you collect yourself: scraping a custom dataset, cleaning and preprocessing it, transfer learning with several differently-sized pretrained backbones, explaining what those models actually look at, and deploying a Streamlit app that classifies an uploaded image and shows its explanation maps — across five notebooks. You'll maintain a GitHub repo organized well enough that a stranger could open it, follow the pipeline from start to finish, and drop their own photo into the app.
 
-Unlike Unit 1, **nobody hands you a dataset here.** You choose the categories, you scrape the images, and you deal with everything wrong with them. Web-scraped images are messy in ways curated benchmarks are not: wrong subjects, duplicates, watermarks, corrupt files, wildly varying sizes. Most of the work in a real image project is getting from "a folder of search results" to "a dataset," and that is deliberately the first third of this assignment.
+### Dataset
+
+**Nobody hands you a dataset here.** You choose the categories, you scrape the images, and you deal with everything wrong with them. Web-scraped images are messy in ways curated benchmarks are not: wrong subjects, duplicates, watermarks, corrupt files, wildly varying sizes. Most of the work in a real image project is getting from "a folder of search results" to "a dataset," and that is deliberately the first third of this assignment. There is no provided dataset and no answer key — your dataset is whatever you build, and defending its quality is part of the assignment.
+
+Two files are provided alongside this prompt:
+
+- **`ddgs_scraper.py`** — the scraper itself. It queries DuckDuckGo image search via the `ddgs` package, downloads results, filters them by size and aspect ratio, and saves one folder per class. You do not modify this file; you import it.
+- **`ddgs_image_scraper.ipynb`** — a demo notebook that imports the module and runs it on a small example. **This is the notebook you start from.**
+
+Keep the two together — the notebook does `import ddgs_scraper`, so the module must sit in the same folder. Install the package with `pip install ddgs`.
+
+Scraping is the one thing you cannot fully control: search results change over time, so re-running the scraper later will not return an identical set. This is why Notebook 1 exports a manifest — it is the record of what you actually trained on.
 
 ### Notebooks
 
-Each notebook is numbered for sort order and covers one topic. Do **NOT** mix work across notebooks.
+Each notebook is numbered for sort order and covers one topic. They are cumulative and most notebooks produce artifacts that the later ones will need.
+- Follow the filename conventions.
+- Do **NOT** mix work across notebooks, i.e., only cleaning should be in the preprocessing notebook (no training, no saliency maps). This runs **forward as well as backward** — work belonging to notebook N+1 that appears in notebook N earns credit in neither.
+- Notebook 1 is **not written from scratch** — see its section below.
 
 | Notebook | Topic | Filename |
 |---|---|---|
@@ -23,27 +31,6 @@ Each notebook is numbered for sort order and covers one topic. Do **NOT** mix wo
 | 3 | Transfer Learning | `P2_Images-3_TransferLearning_<TeamName>.ipynb` |
 | 4 | Interpretability (Saliency & CAM) | `P2_Images-4_xAI_<TeamName>.ipynb` |
 | 5 | Streamlit Deployment | `P2_Images-5_App_<TeamName>.ipynb` |
-
-Note that Notebook 1 is **not written from scratch** — see its section below.
-
-Each notebook is submitted as a snapshot at the start of the following class session.
-
-> **Stay inside the notebook you are on.** Each notebook does its own job and hands its output to the next one. "Do not mix work across notebooks" runs **forward as well as backward**: do not redo an earlier notebook's work here, and do not get a head start on the next one. Do not train a model in the cleaning notebook, and do not generate saliency maps in the transfer-learning notebook. Work belonging to notebook N+1 that appears in notebook N earns credit in **neither** — it is missing where it should be, and out of scope where it is.
-
-### Dataset
-
-You build your own. Two files are provided alongside this prompt:
-
-- **`ddgs_scraper.py`** — the scraper itself. It queries DuckDuckGo image search via the `ddgs` package, downloads results, filters them by size and aspect ratio, and saves one folder per class. You do not modify this file; you import it.
-- **`ddgs_image_scraper.ipynb`** — a demo notebook that imports the module and runs it on a small example. **This is the notebook you start from.**
-
-Keep the two together — the notebook does `import ddgs_scraper`, so the module must sit in the same folder. Install the package with `pip install ddgs`.
-
-You pick the categories, run the scraper, and deal with what comes back.
-
-Notebook 1 covers class selection and scraping. Notebook 2 covers cleaning. There is no provided dataset and no answer key — your dataset is whatever you build, and defending its quality is part of the assignment.
-
-Scraping is the one exception you cannot fully control: search results change over time, so re-running the scraper later will not return an identical set. This is exactly why Notebook 1 exports a manifest — it is the record of what you actually trained on.
 
 ### GitHub Repo
 
@@ -85,18 +72,9 @@ Your repo **MUST**:
 - Have every notebook fully executed top-to-bottom with **NO** errors **and committed with its outputs intact**, a markdown explanation for every decision, and **NO** dead code, scratch cells, or bloated outputs (don't print full dataframes, full training logs, or hundreds of images)
 - Contain **exactly one sample image per class** in `data/samples/`, so a reader can see what your categories look like — and **NO other image files**. Not the scraped dataset, not the preprocessed arrays. Add a `.gitignore` that keeps your image folders out
 - Be free of junk: stray or duplicate notebooks, versioned filenames (e.g. `notebook_v2_FINAL.ipynb`), and anything exceeding GitHub's 100 MB limit (large `.keras` files may need Git LFS or storage outside the repo — say which you did in the README)
-- Use the repo, notebook, and model filenames given above exactly. Your team name goes wherever `<TeamName>` appears, and it must be **usable in a filename** — letters, digits, and hyphens only, no spaces or punctuation — and must **not contain any student's name**. Use the same team name everywhere. Naming violations cost points here
-- Keep the repo **deidentified**: selected notebooks are archived for accreditation review, so **no student's name may appear in any notebook, filename, or folder** — your team name is the only identifier that should be there
-
-GitHub repo quality is a graded component, and it is graded **by inspection** — the files you committed, their names, and whether the structure matches this prompt. Your notebooks are read, not re-run, so **what you commit is what is graded**: a notebook committed without its outputs reads as not done, and a traceback left in a cell is a visible error. An `environment.yml` that leaves out a library your notebooks import counts the same as no environment file at all.
+- Use the repo, notebook, and model filenames given above exactly. Your team name goes wherever `<TeamName>` appears, and it must be **usable in a filename** — letters, digits, and hyphens only, no spaces or punctuation — and must **not contain any student's name**. Use the same team name everywhere.
 
 ### Grading
-
-#### How grading works
-
-Grading happens **live, in class**, from the progress report your team gives at the start of each session — not from later inspection of your notebooks. Nothing is re-opened after class.
-
-#### Points
 
 | Category | Component | Points | Scored as |
 |---|---|---:|---|
@@ -110,38 +88,7 @@ Grading happens **live, in class**, from the progress report your team gives at 
 |  | Peer evaluation | 10 | Individual |
 | **Total** | | **100** | |
 
-**10 of the 100 points are scored individually** — peer evaluation. Everything else is a team grade.
-
-#### Deadlines and absence
-
-Each notebook is due as a snapshot at the start of the class session listed on the schedule, and **at least one team member must be present to report on it**. A notebook first presented the following week earns **half credit**; after that it earns **zero**.
-
-#### How each notebook is scored
-
-Each notebook is scored on six dimensions — **Coverage, Justification, Code quality, Interpretation, Progress report**, and a **keystone** specific to that notebook — each rated **1 to 5**. Each dimension carries a share of the notebook's points, so the six add up to that notebook's value. Only levels 5, 3, and 1 are described; **4 and 2 are the steps between** them.
-
-| Dimension | Share | The question | 5 | 4 | 3 | 2 | 1 |
-|---|---:|---|---|---|---|---|---|
-| **Coverage** | 20% | Is every required element present? | all present | — | two or more missing | — | large parts absent |
-| **Justification** | 20% | Explained and defended, or just executed? | every non-obvious decision reasoned | — | describes *what*, not *why* | — | none |
-| **Code quality** | 15% | Runs clean, follows conventions, correct? | no errors, conventions conform, methods right | — | errors on re-run or a method misapplied | — | does not run |
-| **Interpretation** | 15% | Results read for meaning, or only produced? | read, with surprises accounted for | — | little reading | — | none |
-| **Progress report** | 10% | Can the team account for its own work on the spot? | whoever is asked accounts for the work and the reasoning, unprompted | — | one member accounts for it thinly; others cannot pick it up | — | no one asked can account for the work |
-| **Keystone** | 20% | Did you get the point of *this* notebook? | printed with each notebook below | — | printed with each notebook below | — | printed with each notebook below |
-
-Progress report is why every member must be able to explain every notebook. At most progress reports one member is picked **at random** to account for a specific decision; if they cannot, the question goes to a teammate. You **MUST** be able to explain how any part of your team's code works, not just the part you wrote. **Code that no one on the team can explain does not count as submitted work.**
-
-A rating maps straight to points — no conversion table and no curve. Your six ratings become a weighted average on the 1–5 scale, and that average is read as a fraction of five against the notebook's point value:
-
-$$
-\text{notebook score}_i \;=\; P_i \times \frac{1}{5} \sum_{k=1}^{6} w_k\, r_k
-\qquad\qquad
-\text{score} \;=\; \sum_{i=1}^{5} \text{notebook score}_i
-$$
-
-$r_k$ is your rating on dimension $k$, $w_k$ is its share from the table above, and $P_i$ is notebook $i$'s point value from the table at the top of this prompt. Straight 5s earns all of a notebook's points, straight 4s earns 80% of them, and straight 3s earns 60%.
-
-> **One rule worth knowing in advance.** A number that should have raised suspicion and didn't — R² ≈ 1, accuracy ≈ 100%, any metric that is too good — caps Interpretation at **2** no matter what else is present. Every warning of that kind in this prompt is there for a reason.
+Note: **10 of the 100 points are scored individually** — peer evaluation. Everything else is a team grade.
 
 ---
 
@@ -149,7 +96,7 @@ $r_k$ is your rating on dimension $k$, $w_k$ is its share from the table above, 
 *Filename: `P2_Images-1_Scrape_<TeamName>.ipynb`*
 
 > **Start from the provided notebook — do NOT write this one from scratch.** Take the provided `ddgs_image_scraper.ipynb`, rename it to `P2_Images-1_Scrape_<TeamName>.ipynb`, and **add** your work to it. Copy `ddgs_scraper.py` in beside it. Keep the existing structure; build everything below around it.
-> **Read `ddgs_scraper.py` before you run it.** You are responsible for understanding what it does — this notebook asks you to justify the arguments you pass, and Progress report does not distinguish between code you wrote and code you imported.
+> **Read `ddgs_scraper.py` before you run it.** You are responsible for understanding what it does — this notebook asks you to justify the arguments you pass, and the Progress report dimension does not distinguish between code you wrote and code you imported.
 > **Expect to be rate limited.** DuckDuckGo throttles hard, and reports "No results found" when it does — which looks exactly like a query that matched nothing. The scraper retries and flags any class that ends up empty, but you will still need to wait and re-run individual classes. Scraping five classes at full scale in one sitting is unlikely to work. This is the most common reason a class comes up short of 200, so **start early**.
 
 ### Choosing your classes
@@ -195,15 +142,6 @@ Your submission **MUST** include:
 - Raw accounting table: requested → downloaded → readable, per class
 - `data/P2_manifest.csv` exported with `filename`, `label`, `source_url`, `query`, `readable`
 
-**Keystone — class choice defended and the accounting reconciles**
-
-| | |
-|---:|---|
-| **3** | Classes meet all four constraints with a real argument; counts reconcile stage to stage; any class at risk of missing 200 is identified and re-scraped **now**, not discovered later |
-| **2** | Defensible classes; accounting present but loose |
-| **1** | Classes chosen without argument; counts incomplete |
-| **0** | Benchmark classes used, or no accounting at all |
-
 ---
 
 ## Notebook 2 — Cleaning, Preprocessing & Image EDA
@@ -246,15 +184,6 @@ Your submission **MUST** cover:
 - Image EDA: sample grid of 8+ per class, dimension and aspect-ratio distributions, file size and color mode distributions, per-class mean image, class balance measured
 - Preprocessing decisions justified: RGB normalization, resize strategy, target size, and **no baked-in** `preprocess_input`
 - Exports: cleaned raw-0–255 images, label→index mapping, manifest `kept` column, one sample per class in `data/samples/`
-
-**Keystone — cleaning honesty: manual work documented, leakage check run with code**
-
-| | |
-|---:|---|
-| **3** | States what was removed by hand and why, with counts and a reject grid; leakage demonstrated by code with the result reported; any mean-image shortcut flagged forward to Notebook 4 |
-| **2** | Cleaning documented; leakage asserted rather than demonstrated |
-| **1** | Bare counts with no categories; no leakage check |
-| **0** | Cleaning undocumented — a number that cannot be justified |
 
 ---
 
@@ -323,15 +252,6 @@ Your submission **MUST** include:
 - Notebook 1's confusion prediction revisited against the actual confusion matrix
 - All trained models and the label→index mapping exported
 
-**Keystone — the size/accuracy tradeoff: does bigger win, where do returns flatten**
-
-| | |
-|---:|---|
-| **3** | Answers it from the table and the plot; accounts for what pretraining bought over the from-scratch baseline; judges whether the largest model earned its training time on a dataset this size |
-| **2** | Comparison made; the conclusion is thin |
-| **1** | Models trained, tradeoff never addressed |
-| **0** | Missing — or an unexamined accuracy near 100% |
-
 ---
 
 ## Notebook 4 — Interpretability (Saliency & CAM)
@@ -369,15 +289,6 @@ Your submission **MUST** include:
 - Maps for 3 correctly classified images across 3+ classes, 3 misclassified images, and the same image across all three backbone sizes
 - Shortcut hunt: watermarks, logos, borders, backgrounds correlated with class
 - Method-agreement discussion, and a deploy / don't-deploy judgment with a stated first fix
-
-**Keystone — shortcut hunt with a quantified ablation, not just pictures**
-
-| | |
-|---:|---|
-| **3** | A specific shortcut hypothesis, then occlusion or greying re-measured across the test set — or a genuinely clean result with the evidence that convinced them |
-| **2** | Shortcuts discussed from the maps alone, no ablation |
-| **1** | Maps produced, no hunt attempted |
-| **0** | Absent, or a "clean result" asserted with no evidence |
 
 ---
 
@@ -420,12 +331,4 @@ Your submission **MUST** include:
 - Screenshot of the running app embedded; launch instructions given
 - Discussion of an out-of-class image and a deliberately hard case
 
-**Keystone — app runs, and the discussion is honest about what the model does not know**
-
-| | |
-|---:|---|
-| **3** | Works end to end; the none-of-my-classes case is actually run, the overconfidence is confronted, and a concrete fix is proposed |
-| **2** | Works; discussion generic |
-| **1** | Works with gaps; no honest-uncertainty discussion |
-| **0** | Does not run |
 

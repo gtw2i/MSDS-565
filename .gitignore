@@ -7,7 +7,7 @@ __pycache__/
 # Jupyter autosave checkpoints
 .ipynb_checkpoints/
 
-# LaTeX build output (slides and Final Project guidelines — keep the .tex, not these)
+# LaTeX build output — keep the .tex, not these
 *.aux
 *.fdb_latexmk
 *.fls
@@ -18,9 +18,7 @@ __pycache__/
 *.synctex.gz
 *.toc
 
-# Student-facing exports are generated on demand, not committed.
-# The one exception is the ABET instruction PDFs, which live under Course Admin/ABET/.
+# Exports of the prompts are generated on demand, not committed.
 
-# Submitted student work never enters this repo. Peer_Eval_Tally.ipynb reads the collected
-# peer evaluation forms out of here; they stay local.
+# Submitted student work never enters this repo; it stays local.
 Course Admin/Tracking/Submissions/
